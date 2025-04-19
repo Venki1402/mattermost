@@ -579,24 +579,24 @@ func (s *Server) Channels() *Channels {
 }
 
 func (s *Server) startInterClusterServices(license *model.License) error {
-	if license == nil {
-		mlog.Debug("No license provided; Remote Cluster services disabled")
-		return nil
-	}
+	// if license == nil {
+	// 	mlog.Debug("No license provided; Remote Cluster services disabled")
+	// 	return nil
+	// }
 
 	// Remote Cluster service
 
 	// License check (assume enabled if shared channels enabled)
-	if !license.HasRemoteClusterService() && !license.HasSharedChannels() {
-		mlog.Debug("License does not have Remote Cluster services enabled")
-		return nil
-	}
+	// if !license.HasRemoteClusterService() && !license.HasSharedChannels() {
+	// 	mlog.Debug("License does not have Remote Cluster services enabled")
+	// 	return nil
+	// }
 
 	// Config check
-	if !*s.platform.Config().ConnectedWorkspacesSettings.EnableRemoteClusterService && !*s.platform.Config().ConnectedWorkspacesSettings.EnableSharedChannels {
-		mlog.Debug("Remote Cluster Service disabled via config")
-		return nil
-	}
+	// if !*s.platform.Config().ConnectedWorkspacesSettings.EnableRemoteClusterService && !*s.platform.Config().ConnectedWorkspacesSettings.EnableSharedChannels {
+	// 	mlog.Debug("Remote Cluster Service disabled via config")
+	// 	return nil
+	// }
 
 	var err error
 	appInstance := New(ServerConnector(s.Channels()))
@@ -616,16 +616,16 @@ func (s *Server) startInterClusterServices(license *model.License) error {
 	// Shared Channels service (depends on remote cluster service)
 
 	// License check
-	if !license.HasSharedChannels() {
-		mlog.Debug("License does not have shared channels enabled")
-		return nil
-	}
+	// if !license.HasSharedChannels() {
+	// 	mlog.Debug("License does not have shared channels enabled")
+	// 	return nil
+	// }
 
 	// Config check
-	if !*s.platform.Config().ConnectedWorkspacesSettings.EnableSharedChannels {
-		mlog.Debug("Shared Channels Service disabled via config")
-		return nil
-	}
+	// if !*s.platform.Config().ConnectedWorkspacesSettings.EnableSharedChannels {
+	// 	mlog.Debug("Shared Channels Service disabled via config")
+	// 	return nil
+	// }
 
 	scs, err := sharedchannel.NewSharedChannelService(s, s.Platform(), appInstance)
 	if err != nil {
